@@ -10,12 +10,17 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('booking_items', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('booking_items', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('booking_id')->constrained()->cascadeOnDelete();
+        $table->foreignId('ticket_category_id')->constrained()->cascadeOnDelete();
+        $table->integer('quantity');
+        $table->decimal('unit_price', 8, 2); // Prix unitaire calculé au moment de la réservation
+        $table->decimal('subtotal', 8, 2);
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
